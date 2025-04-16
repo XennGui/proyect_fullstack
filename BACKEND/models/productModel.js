@@ -24,4 +24,21 @@ class ProductModel{
         );
         return result.rows[0];
     }
+
+    //funcion para actualizar producto
+    async UpdateProduct(id, {nombre, precio, descripcion}){
+        const result = await db.query(
+            //Utilizando los placeholders (valores)
+            'UPDATE producto SET nombre = $1, precio = $2, descripcion = $3 WHERE id = $4 RETURNING *',
+            [nombre, precio, descripcion, id]
+        );
+        return result.rows[0];
+    }
+
+    //funcion para eliminar producto
+    async deleteProduct(id){
+        await db.query('delete from producto where id = $1',[id]);
+    }
 }
+
+module.exports = ProductModel();
