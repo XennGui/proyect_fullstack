@@ -4,6 +4,7 @@
 const express = require('express'); //para el manejo de solicitud HTTP
 const cors = require('cors');  //habilita los cors en la aplicación para la comunicación
 const productRoutes = require('./routes/productRouters');
+const clientRoutes = require('./routes/clientRoutes');
 
 class Server {  //clase para encapsular la configuración y el arraque del servidor
   constructor() {
@@ -20,6 +21,7 @@ class Server {  //clase para encapsular la configuración y el arraque del servi
   routes() { //metodo routers
     // Todas las rutas de productos se alojarán en /productos
     this.app.use('/productos', productRoutes);
+    this.app.use('/clientes', clientRoutes);
   }
 
   start() {  //metodo start
