@@ -1,4 +1,4 @@
-//models/productModel.js
+//BACKEND/models/productModel.js
 const db = require('../config/db');
 
 class ProductModel{

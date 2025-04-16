@@ -1,3 +1,4 @@
+//BACKEND/config/db.js
 const { Pool } = require('pg');
 
 class Database {

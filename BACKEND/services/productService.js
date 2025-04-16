@@ -1,4 +1,4 @@
-//models/productServcice.js
+//BACKEND/services/productService.js
 
 const productModel = require('../models/productModel');
 class ProductService{
