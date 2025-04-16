@@ -1,3 +1,4 @@
+//models/productModel.js
 const db = require('../config/db');
 
 class ProductModel{
@@ -41,4 +42,5 @@ class ProductModel{
     }
 }
 
+// ayuda a exportar
 module.exports = ProductModel();
