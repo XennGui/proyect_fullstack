@@ -15,7 +15,7 @@ class ProductService {
     }
 
     async modifyProduct(id, data) {
-        return await productModel.updateProduct(id, data);
+        return await productModel.UpdateProduct(id, data);
     }
 
     async removeProduct(id) {

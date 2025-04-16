@@ -29,7 +29,6 @@ class ProductModel {
     //funcion para actualizar producto
     async UpdateProduct(id, { nombre, precio, descripcion }) {
         const result = await db.query(
-            //Utilizando los placeholders (valores)
             'UPDATE producto SET nombre = $1, precio = $2, descripcion = $3 WHERE id = $4 RETURNING *',
             [nombre, precio, descripcion, id]
         );
