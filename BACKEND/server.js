@@ -1,26 +1,28 @@
 // server.js
-const express = require('express');
-const cors = require('cors');
-const productRoutes = require('./routers/productRouters');
 
-class Server {
+//importamos las dependencias
+const express = require('express'); //para el manejo de solicitud HTTP
+const cors = require('cors');  //habilita los cors en la aplicación para la comunicación
+const productRoutes = require('./routes/productRouters');
+
+class Server {  //clase para encapsular la configuración y el arraque del servidor
   constructor() {
     this.app = express();
     this.config();
     this.routes();
   }
 
-  config() {
+  config() { //metodo config
     this.app.use(express.json());
     this.app.use(cors());
   }
 
-  routes() {
+  routes() { //metodo routers
     // Todas las rutas de productos se alojarán en /productos
     this.app.use('/productos', productRoutes);
   }
 
-  start() {
+  start() {  //metodo start
     const PORT = process.env.PORT || 3000;
     this.app.listen(PORT, () => {
       console.log(`Servidor corriendo en el puerto ${PORT}`);
