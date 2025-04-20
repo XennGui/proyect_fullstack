@@ -1,45 +1,61 @@
-//BACKEND/models/productModel.js
+// BACKEND/models/productModel.js
+
 const db = require('../config/db');
 
 class ProductModel {
 
-    //función para obtener todos los productos de la tabla productos
+    // Obtener todos los productos con datos del cliente
     async getAllProducts() {
-        const result = await db.query('SELECT * FROM producto');
+        const result = await db.query(
+            `SELECT p.id, p.nombre, p.precio, p.descripcion, p.creado_en, c.nombre AS cliente_nombre, c.dni AS cliente_dni 
+            FROM producto p
+            LEFT JOIN cliente c ON p.cliente_id = c.id`
+        );
         return result.rows;
     }
 
-    //función para obtener un registro por su ID
+    //Obtener productos por cliente_id
+    async getProductsByClientId(cliente_id) {
+        const result = await db.query(
+            `SELECT p.id, p.nombre, p.precio, p.descripcion, p.creado_en, c.nombre AS cliente_nombre, c.dni AS cliente_dni
+             FROM producto p
+             LEFT JOIN cliente c ON p.cliente_id = c.id
+             WHERE p.cliente_id = $1`,  
+            [cliente_id]  
+        );
+        return result.rows;
+    }
+
+    //Función para obtener un registro por su ID
     async getProductById(id) {
         const result = await db.query('SELECT * FROM producto WHERE id = $1', [id]);
         return result.rows[0];
-        //Retorna el primer producto (deberia ser único por el ID)
     }
 
-    //funcion para crear un nuevo registro
-    async createProduct({ nombre, precio, descripcion }) {
+    //Crear un producto, asociando un cliente (cliente_id) en caso no este asociado se almacenarà como null
+    async createProduct({ nombre, precio, descripcion, cliente_id }) {
         const result = await db.query(
-            //Utilizando los placeholders (valores)
-            'INSERT INTO producto (nombre, precio, descripcion) VALUES ($1, $2, $3) RETURNING *',
-            [nombre, precio, descripcion]
+            `INSERT INTO producto (nombre, precio, descripcion, cliente_id) 
+            VALUES ($1, $2, $3, $4) RETURNING *`,
+            [nombre, precio, descripcion, cliente_id]
         );
         return result.rows[0];
     }
 
-    //funcion para actualizar producto
-    async UpdateProduct(id, { nombre, precio, descripcion }) {
+    // Actualizar producto por ID
+    async updateProduct(id, { nombre, precio, descripcion, cliente_id }) {
         const result = await db.query(
-            'UPDATE producto SET nombre = $1, precio = $2, descripcion = $3 WHERE id = $4 RETURNING *',
-            [nombre, precio, descripcion, id]
+            `UPDATE producto SET nombre = $1, precio = $2, descripcion = $3, cliente_id = $4 
+            WHERE id = $5 RETURNING *`,
+            [nombre, precio, descripcion, cliente_id, id]
         );
         return result.rows[0];
     }
 
-    //funcion para eliminar producto
+    //Eliminar producto
     async deleteProduct(id) {
-        await db.query('delete from producto where id = $1', [id]);
+        await db.query('DELETE FROM producto WHERE id = $1', [id]);
     }
 }
 
-// ayuda a exportar
 module.exports = new ProductModel();
