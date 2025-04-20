@@ -1,5 +1,7 @@
-//BACKEND/controller/clientController.js
+// BACKEND/controller/clientController.js
+
 const clientService = require('../services/clientService');
+const messages = require('../utils/errorTypes');
 
 class ClientController {
     async getClients(req, res) {
@@ -8,7 +10,23 @@ class ClientController {
             res.json(clients);
         } catch (error) {
             console.error(error);
-            res.status(500).json({ message: 'Error al obtener los clientes' }); //error 500 Error interno del servidor (problema inesperado)
+            res.status(messages.ERROR_OBTENER_CLIENTES.status).json({ message: messages.ERROR_OBTENER_CLIENTES.message });
+        }
+    }
+
+    async getProductCountByClient(req, res) {
+        const { dni } = req.params;
+        try {
+            const client = await clientService.getClientByDNI(dni);
+            if (!client) {
+                return res.status(messages.CLIENTE_NO_ENCONTRADO.status).json({ message: messages.CLIENTE_NO_ENCONTRADO.message });
+            }
+
+            const productCount = await clientService.countProductsForClient(dni);
+            res.json({ ...client, productos_asignados: productCount });
+        } catch (error) {
+            console.error(error);
+            res.status(messages.ERROR_OBTENER_CLIENTE.status).json({ message: messages.ERROR_OBTENER_CLIENTE.message });
         }
     }
 
@@ -17,53 +35,49 @@ class ClientController {
         try {
             const client = await clientService.getClientByDNI(dni);
             if (!client) {
-                return res.status(404).json({ message: 'Cliente no encontrado' }); //error 404 Cliente no encontrado
+                return res.status(messages.CLIENTE_NO_ENCONTRADO.status).json({ message: messages.CLIENTE_NO_ENCONTRADO.message });
             }
             res.json(client);
         } catch (error) {
             console.error(error);
-            res.status(500).json({ message: 'Error al obtener el cliente' }); //error 500 Error interno del servidor (problema inesperado)
+            res.status(messages.ERROR_OBTENER_CLIENTE.status).json({ message: messages.ERROR_OBTENER_CLIENTE.message });
         }
     }
 
     async createClient(req, res) {
+        const { dni, nombre, apellido_paterno, apellido_materno, fecha_nacimiento } = req.body;
         try {
-            const { dni, nombre, apellido_paterno, apellido_materno, fecha_nacimiento } = req.body;
-            const newClient = await clientService.addClient({
-                dni, nombre, apellido_paterno, apellido_materno, fecha_nacimiento
-            });
-            res.status(201).json(newClient);  // error 201 Cliente creado exitosamente
+            const newClient = await clientService.addClient({ dni, nombre, apellido_paterno, apellido_materno, fecha_nacimiento });
+            res.status(messages.CLIENTE_CREADO.status).json(newClient);
         } catch (error) {
             console.error(error);
-            res.status(500).json({ message: 'Error al crear el cliente' }); //error 500 Error interno del servidor (problema inesperado)
+            res.status(messages.ERROR_CREAR_CLIENTE.status).json({ message: messages.ERROR_CREAR_CLIENTE.message });
         }
     }
 
     async updateClient(req, res) {
-        const { id } = req.params;  
+        const { id } = req.params;
         const { dni, nombre, apellido_paterno, apellido_materno, fecha_nacimiento } = req.body;
         try {
-            const updatedCliente = await clientService.modifyClient(id, { dni, nombre, apellido_paterno, apellido_materno, fecha_nacimiento });
-            if (updatedCliente) {
-                res.json(updatedCliente);
-            } else {
-                res.status(404).json({ message: 'Cliente no encontrado' });  //error 404 Cliente no encontrado  
+            const updatedClient = await clientService.modifyClient(id, { dni, nombre, apellido_paterno, apellido_materno, fecha_nacimiento });
+            if (!updatedClient) {
+                return res.status(messages.CLIENTE_NO_ENCONTRADO.status).json({ message: messages.CLIENTE_NO_ENCONTRADO.message });
             }
+            res.json(updatedClient);
         } catch (error) {
             console.error(error);
-            res.status(500).json({ message: 'Error al actualizar el cliente' }); //error 500 Error interno del servidor (problema inesperado)
+            res.status(messages.ERROR_ACTUALIZAR_CLIENTE.status).json({ message: messages.ERROR_ACTUALIZAR_CLIENTE.message });
         }
-
     }
 
     async deleteClient(req, res) {
+        const { dni } = req.params;
         try {
-            const { dni } = req.params;
             await clientService.removeClient(dni);
-            res.sendStatus(204);  //error 204 Cliente eliminado exitosamente
+            res.status(messages.CLIENTE_ELIMINADO.status).send();
         } catch (error) {
             console.error(error);
-            res.status(500).json({ message: 'Error al eliminar el cliente' }); //error 500 Error interno del servidor (problema inesperado)
+            res.status(messages.ERROR_ELIMINAR_CLIENTE.status).json({ message: messages.ERROR_ELIMINAR_CLIENTE.message });
         }
     }
 }
