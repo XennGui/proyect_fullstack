@@ -4,7 +4,6 @@ const errorTypes = {
     // =============================
     // 1xx (Informativo)
     // =============================
-
     CONTINUE: { status: 100, message: 'El servidor acepta la petición inicial' },
     SWITCHING_PROTOCOLS: { status: 101, message: 'Cambio de protocolo (ej: de HTTP a WebSocket)' },
     PROCESSING: { status: 102, message: 'Petición en proceso' },
@@ -114,21 +113,8 @@ const errorTypes = {
     SITE_OVERLOADED: { status: 529, message: 'Sitio sobrecargado (Qualys)' },
     SITE_FROZEN: { status: 530, message: 'Sitio congelado (Pantheon)' },
 
-
     // =============================
-    // personalizados de cliente
-    // =============================
-    ERROR_OBTENER_CLIENTES: { status: 500, message: 'Error al obtener los clientes' },
-    ERROR_OBTENER_CLIENTE: { status: 500, message: 'Error al obtener el cliente' },
-    ERROR_CREAR_CLIENTE: { status: 500, message: 'Error al crear el cliente' },
-    ERROR_ACTUALIZAR_CLIENTE: { status: 500, message: 'Error al actualizar el cliente' },
-    ERROR_ELIMINAR_CLIENTE: { status: 500, message: 'Error al eliminar el cliente' },
-    CLIENTE_NO_ENCONTRADO: { status: 404, message: 'Cliente no encontrado' },
-    CLIENTE_CREADO: { status: 201, message: 'Cliente creado exitosamente' },
-    CLIENTE_ELIMINADO: { status: 204, message: 'Cliente eliminado exitosamente' },
-
-    // =============================
-    // personalizados de producto
+    // personalizados de producto 
     // =============================
 
     ERROR_OBTENER_PRODUCTOS: { status: 500, message: 'Error al obtener los productos' },
@@ -139,7 +125,20 @@ const errorTypes = {
     PRODUCTO_NO_ENCONTRADO: { status: 404, message: 'Producto no encontrado' },
     CLIENTE_ID_REQUERIDO: { status: 400, message: 'cliente_id es requerido' },
     PRODUCTO_CREADO: { status: 201, message: 'Producto creado exitosamente' },
-    PRODUCTO_ELIMINADO: { status: 204, message: 'Producto eliminado exitosamente' },
+    PRODUCTO_ELIMINADO: { status: 204, message: 'Producto eliminado exitosamente' },    
+
+    // =============================
+    // personalizados de cliente 
+    // =============================
+    
+    ERROR_OBTENER_CLIENTES: { status: 500, message: 'Error al obtener los clientes' },
+    ERROR_OBTENER_CLIENTE: { status: 500, message: 'Error al obtener el cliente' },
+    ERROR_CREAR_CLIENTE: { status: 500, message: 'Error al crear el cliente' },
+    ERROR_ACTUALIZAR_CLIENTE: { status: 500, message: 'Error al actualizar el cliente' },
+    ERROR_ELIMINAR_CLIENTE: { status: 500, message: 'Error al eliminar el cliente' },
+    CLIENTE_NO_ENCONTRADO: { status: 404, message: 'Cliente no encontrado' },
+    CLIENTE_CREADO: { status: 201, message: 'Cliente creado exitosamente' },
+    CLIENTE_ELIMINADO: { status: 204, message: 'Cliente eliminado exitosamente' },
 
 };
 
