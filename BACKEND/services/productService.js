@@ -1,27 +1,37 @@
-//BACKEND/services/productService.js
+// BACKEND/services/productService.js
 
 const productModel = require('../models/productModel');
+
 class ProductService {
+    // Obtener productos por cliente_id
+    async getProductsByClientId(cliente_id) {
+        return await productModel.getProductsByClientId(cliente_id);
+    }
+
+    // Obtener todos los productos
     async getProducts() {
         return await productModel.getAllProducts();
     }
 
+    //Obtiene producto por ID
     async getProductById(id) {
         return await productModel.getProductById(id);
     }
 
-    async addProduct(data) {
-        return await productModel.createProduct(data);
+    //Crear un producto
+    async addProduct({ nombre, precio, descripcion, cliente_id }) {
+        return await productModel.createProduct({ nombre, precio, descripcion, cliente_id });
     }
 
-    async modifyProduct(id, data) {
-        return await productModel.UpdateProduct(id, data);
+    //Actualizar un producto
+    async modifyProduct(id, { nombre, precio, descripcion, cliente_id }) {
+        return await productModel.updateProduct(id, { nombre, precio, descripcion, cliente_id });
     }
 
+    // Eliminar un producto
     async removeProduct(id) {
-        await productModel.deleteProduct(id);
+        return await productModel.deleteProduct(id);
     }
 }
-// data contiene todos los atributos
 
 module.exports = new ProductService();
