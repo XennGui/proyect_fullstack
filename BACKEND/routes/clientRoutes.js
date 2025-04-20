@@ -1,10 +1,14 @@
 //BACKEND/routes/clientRouters.js
+
 const express = require('express');
 const router = express.Router();
 const clientController = require('../controller/clientController');
 
 // GET todos los clientes
 router.get('/', (req, res) => clientController.getClients(req, res));
+
+// GET contar productos de un cliente por DNI
+router.get('/productos/count/:dni', (req, res) => clientController.getProductCountByClient(req, res));
 
 // GET cliente por DNI
 router.get('/:dni', (req, res) => clientController.getClientByDNI(req, res));
