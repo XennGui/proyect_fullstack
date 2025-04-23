@@ -1,4 +1,5 @@
 // src/App.js
+
 import React, { useState, useEffect } from "react";
 import { getProducts, deleteProduct } from "./services/productService"; // Importamos los servicios
 import ProductList from "./components/ProductList"; // Importamos el componente de lista de productos
