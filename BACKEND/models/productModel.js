@@ -6,25 +6,21 @@ class ProductModel {
 
     // Obtener todos los productos con datos del cliente
     async getAllProducts() {
+        const result = await db.query('SELECT * FROM producto');
+        return result.rows;
+    }
+
+    // Obtener productos por cliente_id
+    async getProductsByClientId(cliente_id) {
         const result = await db.query(
-            `SELECT p.id, p.nombre, p.precio, p.descripcion, p.creado_en, c.nombre AS cliente_nombre, c.dni AS cliente_dni 
-            FROM producto p
-            LEFT JOIN cliente c ON p.cliente_id = c.id`
+            `SELECT p.id, p.nombre, p.precio, p.descripcion, p.creado_en
+         FROM producto p
+         WHERE p.cliente_id = $1`,
+            [cliente_id]
         );
         return result.rows;
     }
 
-    //Obtener productos por cliente_id
-    async getProductsByClientId(cliente_id) {
-        const result = await db.query(
-            `SELECT p.id, p.nombre, p.precio, p.descripcion, p.creado_en, c.nombre AS cliente_nombre, c.dni AS cliente_dni
-             FROM producto p
-             LEFT JOIN cliente c ON p.cliente_id = c.id
-             WHERE p.cliente_id = $1`,  
-            [cliente_id]  
-        );
-        return result.rows;
-    }
 
     //Función para obtener un registro por su ID
     async getProductById(id) {
