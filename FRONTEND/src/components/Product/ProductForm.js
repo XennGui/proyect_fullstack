@@ -1,5 +1,7 @@
+// src/components/Product/ProductForm.js
+
 import React, { useState, useEffect } from "react";
-import { getProductById, createProduct, updateProduct } from "../services/productService";
+import { getProductById, createProduct, updateProduct } from "../../services/Product/productService";
 
 // Componente que representa el formulario para crear o editar productos
 const ProductForm = ({ productId, onAddProduct, onUpdateProduct }) => {

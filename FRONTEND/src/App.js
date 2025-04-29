@@ -1,9 +1,9 @@
 // src/App.js
 
 import React, { useState, useEffect } from "react";
-import { getProducts, deleteProduct } from "./services/productService"; // Importamos los servicios
-import ProductList from "./components/ProductList"; // Importamos el componente de lista de productos
-import ProductForm from "./components/ProductForm"; // Importamos el componente de formulario de productos
+import { getProducts, deleteProduct } from "./services/Product/productService"; // Importamos los servicios
+import ProductList from "./components/Product/ProductList"; // Importamos el componente de lista de productos
+import ProductForm from "./components/Product/ProductForm"; // Importamos el componente de formulario de productos
 import './App.css';
 
 function App() {

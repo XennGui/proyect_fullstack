@@ -1,4 +1,5 @@
-// src/components/ProductList.js
+// src/components/Product/ProductList.js
+
 import React from "react";
 
 // Componente que muestra la lista de productos

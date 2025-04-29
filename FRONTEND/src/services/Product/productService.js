@@ -1,4 +1,4 @@
-// src/services/productService.js
+// src/services/Product/productService.js
 
 //Services.js contiene las finciones que interactuan con el backend para realizar
 import axios from 'axios';
